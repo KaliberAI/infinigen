@@ -347,7 +347,7 @@ def populate_doors(
     n_doors=3,
     door_chance=1,
     casing_chance=0.0,
-    all_open=False,
+    all_open=True,
 ):
     factories = [
         random_door_factory()(np.random.randint(1e7), constants=constants)

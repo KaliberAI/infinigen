@@ -135,7 +135,7 @@ all_vars = [cu.variable_room, cu.variable_obj]
 @gin.configurable
 def compose_indoors(output_folder: Path, scene_seed: int, **overrides):
     p = pipeline.RandomStageExecutor(scene_seed, output_folder, overrides)
-
+    overrides["topview"] = True
     logger.debug(overrides)
 
     def add_coarse_terrain():
@@ -253,7 +253,6 @@ def compose_indoors(output_folder: Path, scene_seed: int, **overrides):
             cam_rigs=camera_rigs,
             scene_preprocessed=scene_preprocessed,
             init_surfaces=solved_floor_surface,
-            nonroom_objs=nonroom_objs,
         )
 
         butil.delete(solved_floor_surface)
@@ -261,7 +260,7 @@ def compose_indoors(output_folder: Path, scene_seed: int, **overrides):
         return poses, scene_preprocessed
 
     poses, scene_preprocessed = p.run_stage(
-        "pose_cameras", pose_cameras, use_chance=False, default=(None, None)
+        "pose_cameras", pose_cameras, use_chance=False
     )
 
     def animate_cameras():

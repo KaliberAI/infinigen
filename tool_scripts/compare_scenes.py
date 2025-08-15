@@ -16,9 +16,9 @@ def count_objects_in_scene(blend_file):
     print(f"  total object count: {object_count}")
     print(f"  mesh count: {mesh_count}")
     print(f"  furniture: {furniture}")
-    print(f"  decorativeß: {decorative}")
+    print(f"  decorative: {decorative}")
     print()
 
-# compare  coarse vs populated objects in scene
+# compare coarse vs populated objects in scene
 count_objects_in_scene("outputs/indoors/APT0_fast/scene.blend")
 count_objects_in_scene("outputs/indoors/APT0_fast_populated/scene.blend")

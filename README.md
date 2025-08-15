@@ -13,6 +13,7 @@
     python infinigen_launchoutput.py omniverse/APT2_fast_door_open_room_fast_1sofa/export_scene.blend/export_scene.usdc \  
     --base-path /home/kaliber/chaoi/outputs
   ```
+3. A detail documentation can be found [here](https://docs.google.com/document/d/1WarCyi2A4RcxYKIV9xQP5VW4Yci_nuLvuhsvtIJVGos/edit?usp=sharing).
 
 # [Infinigen: Infinite Photorealistic Worlds Using Procedural Generation](https://infinigen.org)
 

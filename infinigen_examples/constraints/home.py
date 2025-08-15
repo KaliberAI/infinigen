@@ -327,7 +327,7 @@ def home_room_constraints(has_fewer_rooms=False):
             + public_bathroom_via_living_room(r)
         )
     )
-    if fast:
+    if has_fewer_rooms:
         node_constraint = (
             (rooms[Semantics.Entrance].count() >= 1)
             * (rooms[Semantics.StaircaseRoom].count() == 0)

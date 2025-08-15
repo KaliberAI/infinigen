@@ -135,8 +135,6 @@ all_vars = [cu.variable_room, cu.variable_obj]
 @gin.configurable
 def compose_indoors(output_folder: Path, scene_seed: int, **overrides):
     p = pipeline.RandomStageExecutor(scene_seed, output_folder, overrides)
-    # To always hide the ceiling
-    overrides["topview"] = True
     logger.debug(overrides)
 
     def add_coarse_terrain():

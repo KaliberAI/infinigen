@@ -383,6 +383,7 @@ class Summ_writer(object):
                 # color = color.astype(np.uint8)
                 # color = (color[0], color[1], color[2])
                 # print('color', color)
+            # import ipdb; ipdb.set_trace()
 
             cv2.circle(
                 rgbs[s], (int(traj[s, 0]), int(traj[s, 1])), linewidth + 1, color, -1

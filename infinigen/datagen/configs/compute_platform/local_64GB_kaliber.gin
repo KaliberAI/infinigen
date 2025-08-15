@@ -1,6 +1,8 @@
+# Kaliber's configutation for infinigen
+# Author: Chaoi Tuan, Liwei Yang
 
+# Set to the size of system RAM divided by 20GB
 manage_datagen_jobs.num_concurrent = 2
-
 
 get_cmd.process_niceness = 2 # let UI processes etc take precedence, to make the smooth and UI usable
 local_submit_cmd.use_scheduler = True

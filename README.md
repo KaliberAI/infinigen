@@ -1,7 +1,18 @@
-
 <div align="center">
 <img src="docs/images/infinigen.png" width="300"></img>
 </div>
+
+# Infinigen
+
+1. Follow the [Installation Instructions](docs/Installation.md) to install the infinigen package.
+2. Use infinigen_launchoutput.py to view the output.
+
+  ```
+    conda activate infinigen
+    # Example usage
+    python infinigen_launchoutput.py omniverse/APT2_fast_door_open_room_fast_1sofa/export_scene.blend/export_scene.usdc \  
+    --base-path /home/kaliber/chaoi/outputs
+  ```
 
 # [Infinigen: Infinite Photorealistic Worlds Using Procedural Generation](https://infinigen.org)
 

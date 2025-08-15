@@ -1,4 +1,5 @@
-# Script to call original infinigen_sdg_utils functions
+# Scipt to show the output of the Infinigen scene in Isaac Sim
+
 import argparse
 import os
 import sys
@@ -6,10 +7,10 @@ import sys
 # Parse command line arguments before starting SimulationApp
 parser = argparse.ArgumentParser(description='Setup Infinigen environment in Isaac Sim')
 parser.add_argument('usd_path', 
-                    help='Path to USD/USDC file relative to /home/kaliber/infinigen_dev/outputs/ (e.g., omniverse/APT2_fast_door_open_room_fast_1sofa/export_scene.blend/export_scene.usdc)')
+                    help='Path to USD/USDC file relative to /home/kaliber/infinigen/outputs/ (e.g., omniverse/APT2_fast_door_open_room_fast_1sofa/export_scene.blend/export_scene.usdc)')
 parser.add_argument('--base-path', '-b',
-                    default='/home/kaliber/infinigen_dev/outputs',
-                    help='Base directory path (default: /home/kaliber/infinigen_dev/outputs)')
+                    default='/home/kaliber/infinigen/outputs',
+                    help='Base directory path (default: /home/kaliber/infinigen/outputs)')
 parser.add_argument('--set-default-prim', 
                     action='store_true',
                     default=False,
@@ -31,9 +32,6 @@ args = parser.parse_args()
 
 from isaacsim import SimulationApp
 simulation_app = SimulationApp(launch_config={"headless": False})
-
-# Add path where infinigen_sdg_utils.py is located
-#sys.path.append(os.path.join(os.getcwd(), "standalone_examples/replicator/infinigen"))
 
 import omni.usd
 import infinigen_sdg_utils as infinigen_utils
@@ -274,7 +272,7 @@ def add_colliders_and_rigid_body_to_env(root_path: str = None, approximation_typ
     
     print(f"Added colliders and rigid body dynamics to {processed_count} mesh prims")
 
-def construct_full_path(relative_path: str, base_path: str = "/home/kaliber/infinigen_dev/outputs") -> str:
+def construct_full_path(relative_path: str, base_path: str = "/home/kaliber/infinigen/outputs") -> str:
     """
     Construct full file path from relative path
     

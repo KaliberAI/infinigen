@@ -14,6 +14,8 @@
     --base-path /home/kaliber/chaoi/outputs
   ```
 
+- [ ] create a script to launch_infinigen.py to organize all the pipeline overrides and configs into single cmd
+
 # [Infinigen: Infinite Photorealistic Worlds Using Procedural Generation](https://infinigen.org)
 
 [**Getting Started**](#getting-started)

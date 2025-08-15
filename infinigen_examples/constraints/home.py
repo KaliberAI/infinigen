@@ -9,7 +9,6 @@ from collections import OrderedDict
 import gin
 import numpy as np
 from numpy.random import uniform
-import pdb
 
 from infinigen.assets.objects import (
     appliances,

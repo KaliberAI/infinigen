@@ -144,7 +144,7 @@ def split_glass_mats():
     ]
     for match in matches:
         if len(match.material_slots) == 0 or match.material_slots[0] is None:
-            continue  # skip objects without material slots
+            continue
 
         mat = match.material_slots[0].material
         if mat is None:

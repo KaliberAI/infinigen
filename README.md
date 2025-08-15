@@ -15,6 +15,9 @@
   ```
 3. A detail documentation can be found [here](https://docs.google.com/document/d/1WarCyi2A4RcxYKIV9xQP5VW4Yci_nuLvuhsvtIJVGos/edit?usp=sharing).
 
+- [ ] Use config to override parameters
+- [ ] Move documentation to wiki page
+
 # [Infinigen: Infinite Photorealistic Worlds Using Procedural Generation](https://infinigen.org)
 
 [**Getting Started**](#getting-started)

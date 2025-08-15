@@ -135,6 +135,7 @@ all_vars = [cu.variable_room, cu.variable_obj]
 @gin.configurable
 def compose_indoors(output_folder: Path, scene_seed: int, **overrides):
     p = pipeline.RandomStageExecutor(scene_seed, output_folder, overrides)
+
     logger.debug(overrides)
 
     def add_coarse_terrain():
@@ -252,6 +253,7 @@ def compose_indoors(output_folder: Path, scene_seed: int, **overrides):
             cam_rigs=camera_rigs,
             scene_preprocessed=scene_preprocessed,
             init_surfaces=solved_floor_surface,
+            nonroom_objs=nonroom_objs,
         )
 
         butil.delete(solved_floor_surface)

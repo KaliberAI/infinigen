@@ -45,7 +45,7 @@ def sample_home_constraint_params():
         # meters squared of wall art per approx meters squared of FLOOR area. TODO cant measure wall area currently.
         painting_area_per_room_area=uniform(40, 100) / 40,
         # rare objects wont even be added to the constraint graph in most homes
-        has_tv=uniform() < 1, # 0,5
+        has_tv=uniform() < 1, # 0.5
         has_aquarium_tank=uniform() < 0.15,
         has_birthday_balloons=uniform() < 0.15,
         has_cocktail_tables=uniform() < 0.15,
@@ -77,7 +77,7 @@ def home_room_constraints(has_fewer_rooms=False):
             lambda r: rooms[Semantics.Hallway]
             .related_to(r, cl.Traverse())
             .count()
-            .in_range(0, 2, mean=1.2)
+            .in_range(0, 2, mean=1.2) # (0, 2, mean=1.2)
         )
         * rooms[Semantics.LivingRoom].all(
             lambda r: rooms[Semantics.Bedroom]

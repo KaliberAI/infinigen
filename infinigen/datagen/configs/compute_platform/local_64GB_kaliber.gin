@@ -28,6 +28,13 @@ queue_export.cpus = 8 # 4
 queue_export.hours = 24
 queue_export.submit_cmd = @local_submit_cmd
 
+# KALIBER EDITS
+
+queue_export.omniverse_export = True
+queue_export.format = "usdc"
+
+# END KALIBER EDITS
+
 # Rendering
 queue_render.cpus = 8 # 4
 queue_render.submit_cmd = @local_submit_cmd

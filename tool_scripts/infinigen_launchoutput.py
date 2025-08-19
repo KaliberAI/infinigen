@@ -8,12 +8,9 @@ import sys
 parser = argparse.ArgumentParser(description='Setup Infinigen environment in Isaac Sim')
 parser.add_argument('usd_path', 
                     help='Path to USD/USDC file relative to /home/kaliber/infinigen/outputs/ (e.g., omniverse/APT2_fast_door_open_room_fast_1sofa/export_scene.blend/export_scene.usdc)')
-parser.add_argument('--base-path', '-b',
-                    default='/home/kaliber/infinigen/outputs',
-                    help='Base directory path (default: /home/kaliber/infinigen/outputs)')
 parser.add_argument('--set-default-prim', 
                     action='store_true',
-                    default=False,
+                    default=True,
                     help='Set /Environment as the default prim (default: False)')
 parser.add_argument('--add-rigid-body', 
                     action='store_true',
@@ -36,6 +33,11 @@ simulation_app = SimulationApp(launch_config={"headless": False})
 import omni.usd
 import infinigen_sdg_utils as infinigen_utils
 
+# ANSI escape codes for log colors
+RED = "\033[91m"
+YELLOW = "\033[93m"
+RESET = "\033[0m"
+
 def verify_positions_unchanged(stage, before_transforms: dict, after_transforms: dict):
     """
     Verify that object positions haven't changed
@@ -55,7 +57,7 @@ def verify_positions_unchanged(stage, before_transforms: dict, after_transforms:
             
             # Compare transform matrices (with small tolerance for floating point precision)
             if not transforms_are_equal(before_transform, after_transform, tolerance=1e-6):
-                print(f"⚠️ Position changed for: {prim_path}")
+                print(f"{YELLOW}Position changed for: {prim_path}{RESET}")
                 changes_detected += 1
     
     if changes_detected == 0:
@@ -110,7 +112,7 @@ def capture_transforms(stage, root_path="/Environment"):
     
     return transforms
 
-def setup_infinigen_scene(usd_file_path: str, approximation_type: str = "none", hide_top_walls: bool = True, add_rigid_body: bool = False, set_default_prim: bool = False):
+def setup_infinigen_scene(usd_file_path: str, approximation_type: str = "triangleMesh", hide_top_walls: bool = True, add_rigid_body: bool = False, set_default_prim: bool = True):
     """
     Load Infinigen USD file and setup environment
     
@@ -140,9 +142,9 @@ def setup_infinigen_scene(usd_file_path: str, approximation_type: str = "none", 
             prim_path="/Environment", 
             remove_existing=True
         )
-        print(f"✓ Environment successfully loaded to: /Environment")
+        print(f"Environment successfully loaded to: /Environment{RESET}")
     except Exception as e:
-        print(f"✗ Loading failed: {e}")
+        print(f"{RED}Loading failed: {e}{RESET}")
         return False
     
     # 3. Set default prim if requested
@@ -157,7 +159,7 @@ def setup_infinigen_scene(usd_file_path: str, approximation_type: str = "none", 
     stage = omni.usd.get_context().get_stage()
     print("Capturing initial object positions...")
     initial_transforms = capture_transforms(stage, "/Environment")
-    print(f"✓ Captured {len(initial_transforms)} object transforms")
+    print(f"Captured {len(initial_transforms)} object transforms")
     
     # 6. Setup environment with custom collider/rigid body options
     print("Setting up environment...")
@@ -174,15 +176,15 @@ def setup_infinigen_scene(usd_file_path: str, approximation_type: str = "none", 
     position_preserved = verify_positions_unchanged(stage, initial_transforms, final_transforms)
     
     collision_type = "colliders and rigid bodies" if add_rigid_body else "colliders only"
-    print(f"✓ Environment setup complete ({collision_type} added, ceiling hidden)")
+    print(f"Environment setup complete ({collision_type} added, ceiling hidden)")
     
     # 8. Resolve scaling issues
     print("Resolving scaling issues...")
     infinigen_utils.resolve_scale_issues_with_metrics_assembler()
-    print("✓ Scaling issues resolved")
+    print("Scaling issues resolved")
     
     # 9. Setup complete
-    print("✓ All setup completed")
+    print("All setup completed")
     
     print(f"=== Environment Setup Complete! ===")
     return True
@@ -200,13 +202,13 @@ def setup_default_prim(prim_path: str = "/Environment"):
     prim = stage.GetPrimAtPath(prim_path)
     
     if not prim.IsValid():
-        print(f"⚠️ Warning: Prim at path '{prim_path}' is not valid. Cannot set as default prim.")
+        print(f"{YELLOW}Warning: Prim at path '{prim_path}' is not valid. Cannot set as default prim.{RESET}")
         return False
     
     # Set the default prim
     stage.SetDefaultPrim(prim)
     
-    print(f"✓ Default prim set to: {prim_path}")
+    print(f"Default prim set to: {prim_path}")
     return True
 
 def setup_environment_with_options(root_path: str = None, approximation_type: str = "none", hide_top_walls: bool = False, add_rigid_body: bool = False):
@@ -272,37 +274,12 @@ def add_colliders_and_rigid_body_to_env(root_path: str = None, approximation_typ
     
     print(f"Added colliders and rigid body dynamics to {processed_count} mesh prims")
 
-def construct_full_path(relative_path: str, base_path: str = "/home/kaliber/infinigen/outputs") -> str:
-    """
-    Construct full file path from relative path
-    
-    Args:
-        relative_path: Path relative to base_path (e.g., omniverse/APT2_fast_door_open_room_fast_1sofa/export_scene.blend/export_scene.usdc)
-        base_path: Base directory path
-    
-    Returns:
-        Full file path
-    """
-    # Ensure relative_path is not None or empty
-    if not relative_path:
-        raise ValueError("relative_path cannot be empty or None")
-    
-    # Remove leading slash if present
-    if relative_path.startswith('/'):
-        relative_path = relative_path[1:]
-    
-    # Construct full path
-    full_path = os.path.join(base_path, relative_path)
-    
-    return full_path
-
 # Main program
 if __name__ == "__main__":
     try:
-        # Construct full file path
-        usd_file_path = construct_full_path(args.usd_path, args.base_path)
-        
-        print(f"🔗 Using file path: {usd_file_path}")
+
+        usd_file_path = args.usd_path
+        print(f"Using file path: {usd_file_path}")
         
         # Check if file exists
         if not os.path.exists(usd_file_path):
@@ -322,7 +299,7 @@ if __name__ == "__main__":
         if success:
             collision_info = "colliders and rigid bodies" if args.add_rigid_body else "colliders only"
             default_prim_info = " with /Environment as default prim" if args.set_default_prim else ""
-            print(f"\n🎉 Success! You can view the setup environment in Isaac Sim")
+            print(f"Success! You can view the setup environment in Isaac Sim")
             print(f"   - Ceiling has been hidden (if enabled)")
             print(f"   - All objects have {collision_info}")
             print(f"   - Ceiling lights have been fixed")
@@ -336,8 +313,10 @@ if __name__ == "__main__":
         sys.exit(1)
     
     # Keep application running
-    print("\n Close window to exit program...")
+    print("=== PLEASE COLLECTED AND SAVE THE CURRENT SCENE BEFORE CLOSED THE WINDOW! ===")
+    print("=== PLEASE SELECT FLAT COLLECTION AND GROUP BY MDL ===")
     while simulation_app.is_running():
         simulation_app.update()
+    print("=== EXIT PROGRAM ===")
 
     simulation_app.close()

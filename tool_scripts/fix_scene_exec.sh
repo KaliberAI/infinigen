@@ -17,5 +17,5 @@ if [ $# -eq 0 ]; then
     exit 1
 else
     # Pass all arguments to the Python script
-    ./python.sh "$SCRIPT_DIR/infinigen_launchoutput.py" "$@"
+    ./python.sh "$SCRIPT_DIR/fix_scene.py" "$@"
 fi

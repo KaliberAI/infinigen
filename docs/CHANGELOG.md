@@ -230,3 +230,11 @@ v1.15.4
 - disable optimize_disk_usage unless requested
 - attempted to fix pypi
 - fix missing studio.gin #417 by @jerrylingjiemei
+
+v1.15.5
+- Fix mismatched USD textures due to unhandled slashes in object names
+
+v1.16.0
+- Refactored scatters into classes
+- Change blender_gt surface normals convention from world coordinates to camera coordinates.
+- Allow user specification of floor plans as a series of shapely primitives.

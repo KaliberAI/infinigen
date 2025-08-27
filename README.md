@@ -2,21 +2,29 @@
 <img src="docs/images/infinigen.png" width="300"></img>
 </div>
 
-# Infinigen
+# Infinigen - Kaliber Version
 
-1. Follow the [Installation Instructions](docs/Installation.md) to install the infinigen package.
-2. Use infinigen_launchoutput.py to view the output.
+## Installation
+Follow the [Installation Instructions](docs/Installation.md) to install the infinigen package.
 
-  ```
-    conda activate infinigen
-    # Example usage
-    python infinigen_launchoutput.py omniverse/APT2_fast_door_open_room_fast_1sofa/export_scene.blend/export_scene.usdc \  
-    --base-path /home/kaliber/chaoi/outputs
-  ```
-3. A detail documentation can be found [here](https://docs.google.com/document/d/1WarCyi2A4RcxYKIV9xQP5VW4Yci_nuLvuhsvtIJVGos/edit?usp=sharing).
+## Usage
+Generate the 3D scenes using All in one command
+```'
+CUDA_VISIBLE_DEVICES=0 python -m infinigen.datagen.manage_jobs --output_folder <output-folder> --num_scenes <num-of-scenes> --pipeline_configs local_64GB_kaliber.gin monocular.gin --pipeline_overrides get_cmd.driver_script='infinigen_examples.generate_indoors' --configs fast_solve_kaliber.gin
+```
 
-- [ ] Use config to override parameters
-- [ ] Move documentation to wiki page
+Use fix_scene_exec.sh to process the output.
+```
+conda activate infinigen
+cd tool_scripts
+# This script adds collider and rigid body dyanmics to the scene according to different types of objects
+./fix_scene_exec.sh <usd-path>
+# Use the UI to collected and saved as a new scene
+```
+
+## TODO
+- [x] Use config to override parameters
+- [ ] Move [documentation](https://docs.google.com/document/d/1WarCyi2A4RcxYKIV9xQP5VW4Yci_nuLvuhsvtIJVGos/edit?usp=sharing) to wiki page
 
 # [Infinigen: Infinite Photorealistic Worlds Using Procedural Generation](https://infinigen.org)
 
